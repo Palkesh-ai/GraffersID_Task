@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+@theme{
+    --color-regal-one: #D100F3; 
+    --color-regal-two: #002BC5;
+  }

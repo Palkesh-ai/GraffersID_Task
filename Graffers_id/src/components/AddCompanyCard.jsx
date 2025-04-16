@@ -14,18 +14,18 @@ const AddCompanyCard = ({ onClose, onSubmit }) => {
             onClick={onClose} // Close the modal when clicking outside
         >
             <div
-                className="max-w-sm mx-auto w-2xl bg-white rounded-lg shadow-lg p-6 relative"
+                className=" max-w-sm mx-auto w-2xl bg-white rounded-lg shadow-lg p-6 relative overflow-hidden flex-col justify-center align-items-center"
                 onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the modal
             >
                 {/* Header Section */}
-                <div className="-rotate-45  -top-1.5 -left-6.5">
-                    <div className=" flex justify-center -space-x-14 ">
-                        <div className=" mix-blend-multiply w-30 h-30 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></div>
-                        <div className=" mix-blend-multiply w-30 h-30 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></div>
+                <div className="-z-10 -rotate-45 overflow-ellipsis -top-1.5 -left-6.5">
+                    <div className=" absolute flex -my-50 -mx-9 justify-center -space-x-14 ">
+                        <div className=" mix-blend-multiply w-30 h-30 bg-gradient-to-r from-regal-one to-regal-two rounded-full"></div>
+                        <div className=" mix-blend-multiply w-30 h-30 bg-gradient-to-r from-regal-one/20 to-regal-two/20 rounded-full"></div>
                     </div>
                 </div>
                 {/* Card Title */}
-                <h2 className="text-2xl font-bold mb-6">Add Company</h2>
+                <h2 className="text-2xl font-bold mb-6 text-center">Add Company</h2>
                 {/* Form Section */}
                 <form onSubmit={handleSubmit}>
                     {/* Company Name Field */}
@@ -88,12 +88,14 @@ const AddCompanyCard = ({ onClose, onSubmit }) => {
                         />
                     </div>
                     {/* Save Button */}
+                    <div className="flex justify-center mt-6">                    
                     <button
                         type="submit"
-                        className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg py-2 font-medium hover:shadow-lg"
+                        className="w-16 self-center bg-gradient-to-r from-regal-one to-regal-two text-white rounded-lg py-2 font-medium hover:shadow-lg"
                     >
                         Save
                     </button>
+                    </div>
                 </form>
             </div>
         </div>

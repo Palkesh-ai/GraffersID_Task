@@ -15,13 +15,19 @@ const CompanyList = () => {
   };
 
   return (
-    <div>
+    <div className="bg-gray-100 min-h-screen px-40">
       <Navbar />
       {addCompany && (
         <AddCompanyCard onClose={handleAddCompanyToggle} onSubmit={handleSubmit} />
       )}
       <div className="container mx-auto p-4 mt-16">
-        <div className="mb-8">
+        {/* // Header Section */}
+        <div className="flex items-end w-full justify-between">
+          <h2 className="text-sm font-light mb-4">Select City: </h2>
+          <h2 className="text-sm font-light mb-4">Sort:</h2>
+        </div>
+        {/* // Search and Filter Section */}
+        <div className="mb-8 flex flex-row align-middle justify-between">
           <div className="flex space-x-4 mb-4">
             <div className="relative flex-grow">
               <input
@@ -33,8 +39,8 @@ const CompanyList = () => {
                 <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
               </svg>
             </div>
-            <button className="bg-gradient-to-l from-purple-500 to-pink-500 text-white px-4 py-2 rounded-md">Find Company</button>
-            <button className="bg-gradient-to-l from-purple-500 to-pink-500 text-white  px-4 py-2 rounded-md" onClick={() => setAddCompany(true)}>+ Add Company</button>
+            <button className="bg-gradient-to-l from-regal-two to-regal-one text-white px-4 py-2 rounded-md">Find Company</button>
+            <button className="bg-gradient-to-l from-regal-two to-regal-one text-white  px-4 py-2 rounded-md" onClick={() => setAddCompany(true)}>+ Add Company</button>
           </div>
           <div className="flex justify-end">
             <select className="border border-gray-300 p-2 rounded-md">
@@ -46,7 +52,7 @@ const CompanyList = () => {
         </div>
 
         <div>
-          <h2 className="text-lg font-semibold mb-4">Result Found: {companies.length}</h2>
+          <h2 className="text-sm font-light mb-4">Result Found: {companies.length}</h2>
           <div className="space-y-4">
             {companies.map((company, index) => (
               <div key={index} className="flex items-center border rounded-lg p-4 shadow-md">
