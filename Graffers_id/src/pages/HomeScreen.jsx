@@ -6,6 +6,7 @@ import { getCompanies } from '../localStorageUtils';
 const CompanyList = () => {
   const [addCompany, setAddCompany] = useState(false);
   const [companies, setCompanies] = useState([]);
+  const [sortBy, setSortBy] = useState('Name');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,19 +19,35 @@ const CompanyList = () => {
     }
   }, []);
 
-// Toggle add company modal state function 
-const handleAddCompanyToggle = () => {
-  setAddCompany(!addCompany);
-};
+  // Sort companies based on selected option
+  const sortedCompanies = [...companies].sort((a, b) => {
+    switch (sortBy) {
+      case 'Name':
+        return a.name.localeCompare(b.name);
+      case 'Rating':
+        return b.rating - a.rating;
+      case 'Location':
+        return a.address.localeCompare(b.address);
+      case 'Average':
+        return (b.rating / b.reviews) - (a.rating / a.reviews);
+      default:
+        return 0;
+    }
+  });
 
-const handleReviewToggle = (id) => {
-  navigate(`/company/${id}`);
-};
+  // Toggle add company modal state function 
+  const handleAddCompanyToggle = () => {
+    setAddCompany(!addCompany);
+  };
 
-const handleSubmit = (newCompany) => {
-  setCompanies(prev => [...prev, newCompany]);
-  handleAddCompanyToggle();
-};
+  const handleReviewToggle = (id) => {
+    navigate(`/company/${id}`);
+  };
+
+  const handleSubmit = (newCompany) => {
+    setCompanies(prev => [...prev, newCompany]);
+    handleAddCompanyToggle();
+  };
 
   return (
     <div className=" h-screen w-screen">
@@ -41,12 +58,13 @@ const handleSubmit = (newCompany) => {
       
       <div className={`w-[75%] mx-auto p-4 mt-16 ${addCompany ? 'overflow-y-hidden fixed top-0 left-0 right-0 bottom-0': ''} `}>
         {/* // Header Section */}
+        
         <div className="flex items-end w-full justify-between">
           <h2 className="text-sm font-light mb-4">Select City: </h2>
           <h2 className="text-sm font-light mb-4">Sort:</h2>
         </div>
         {/* // Search and Filter Section */}
-        <div className="mb-8 flex flex-row align-middle justify-between">
+        <div className="mb-8 flex flex-row align-middle justify-between ">
           <div className="flex space-x-4 mb-4">
             <div className="relative flex-grow">
               <input
@@ -61,11 +79,16 @@ const handleSubmit = (newCompany) => {
             <button className="bg-gradient-to-l from-regal-two to-regal-one text-white px-4 py-2 rounded-md">Find Company</button>
             <button className="bg-gradient-to-l from-regal-two to-regal-one text-white  px-4 py-2 rounded-md" onClick={() => setAddCompany(true)}>+ Add Company</button>
           </div>
-          <div className="flex justify-end">
-            <select className="border border-gray-300 p-2 rounded-md">
+          <div className="flex justify-end h-full">
+            <select 
+              className="border border-gray-300 p-2 rounded-md"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+            >
               <option>Name</option>
+              <option>Average</option>
               <option>Rating</option>
-              <option>Reviews</option>
+              <option>Location</option>
             </select>
           </div>
         </div>
@@ -73,7 +96,7 @@ const handleSubmit = (newCompany) => {
         <div>
           <h2 className="text-sm font-light mb-4">Result Found: {companies.length}</h2>
           <div className="space-y-4">
-            {companies.map((company, index) => (
+            {sortedCompanies.map((company, index) => (
               <div key={index} className="flex items-center border-0.1 rounded-lg p-4 shadow-md">
                 <div className={`w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-bold mr-4 ${index % 2 === 0 ? 'bg-blue-600' : 'bg-green-600'}`}>
                   {company.logo}

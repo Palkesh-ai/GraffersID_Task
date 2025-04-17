@@ -44,10 +44,17 @@ const AddCompanyCard = ({ onClose, onSubmit }) => {
             className="absolute inset-0 bg-black/25 flex items-center justify-center z-10"
             onClick={onClose}
         >
+            
             <div
-                className="max-w-sm mx-auto w-2xl bg-white rounded-lg shadow-lg p-6 relative"
+                className="max-w-sm mx-auto w-2xl bg-white rounded-3xl shadow-lg p-6 relative overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
             >
+                <div className="-z-10 -rotate-45 overflow-ellipsis -top-1.5 -left-6.5">
+                    <div className="absolute flex -my-50 -mx-9 justify-center -space-x-14 ">
+                        <div className="mix-blend-multiply w-30 h-30 bg-gradient-to-r from-regal-one to-regal-two rounded-full"></div>
+                        <div className="mix-blend-multiply w-30 h-30 bg-gradient-to-r from-regal-one/20 to-regal-two/20 rounded-full"></div>
+                    </div>
+                </div>
                 <h2 className="text-2xl font-bold mb-6 text-center">Add Company</h2>
                 <form onSubmit={handleSubmit}>
                     {['name', 'location', 'foundedOn', 'city'].map((field, index) => (
