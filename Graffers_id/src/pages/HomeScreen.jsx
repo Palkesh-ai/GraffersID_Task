@@ -1,26 +1,35 @@
 import React, { useState } from 'react';
-import Navbar from '../components/Navbar';
 import AddCompanyCard from '../components/AddCompanyCard';
 import { companies } from '../../public/demoData';
+import { useNavigate } from 'react-router-dom';
+
 const CompanyList = () => {
   const [addCompany, setAddCompany] = useState(false);
+const navigate = useNavigate();
 
-  const handleAddCompanyToggle = () => {
-    setAddCompany(!addCompany);
+// Toggle add company modal state function 
+const handleAddCompanyToggle = () => {
+  setAddCompany(!addCompany);
+};
+
+const handleReviewToggle = (id) => {
+  navigate(`/company/${id}`);
   };
 
   const handleSubmit = () => {
     // Handle submission logic here
+
     handleAddCompanyToggle(); // Close the modal after submission
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen px-40">
-      <Navbar />
+    <div className=" h-screen w-screen">
+      
       {addCompany && (
         <AddCompanyCard onClose={handleAddCompanyToggle} onSubmit={handleSubmit} />
       )}
-      <div className="container mx-auto p-4 mt-16">
+      
+      <div className={`w-[75%] mx-auto p-4 mt-16 ${addCompany ? 'overflow-y-hidden fixed top-0 left-0 right-0 bottom-0': ''} `}>
         {/* // Header Section */}
         <div className="flex items-end w-full justify-between">
           <h2 className="text-sm font-light mb-4">Select City: </h2>
@@ -55,7 +64,7 @@ const CompanyList = () => {
           <h2 className="text-sm font-light mb-4">Result Found: {companies.length}</h2>
           <div className="space-y-4">
             {companies.map((company, index) => (
-              <div key={index} className="flex items-center border rounded-lg p-4 shadow-md">
+              <div key={index} className="flex items-center border-0.1 rounded-lg p-4 shadow-md">
                 <div className={`w-16 h-16 rounded-full flex items-center justify-center text-white text-2xl font-bold mr-4 ${index % 2 === 0 ? 'bg-blue-600' : 'bg-green-600'}`}>
                   {company.logo}
                 </div>
@@ -71,7 +80,12 @@ const CompanyList = () => {
                 </div>
                 <div className="text-right">
                   <p className="text-gray-500 text-sm">Founded on {company.founded}</p>
-                  <button className="mt-2 bg-gray-800 text-white px-4 py-2 rounded-md text-sm">Detail Review</button>
+                  <button
+                    className="mt-2 bg-gray-800 text-white px-4 py-2 rounded-md text-sm"
+                    onClick={() => handleReviewToggle(company.id)}
+                  >
+                    Detail Review
+                  </button>
                 </div>
               </div>
             ))}
