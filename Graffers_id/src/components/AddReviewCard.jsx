@@ -4,7 +4,7 @@ import { reviewsData } from '../../public/demoData';
 const AddReviewCard = ({ onClose, onSubmit }) => {
     const [rating, setRating] = React.useState(0);
     const [formData, setFormData] = React.useState({
-        fullName: '',
+        name: '',
         subject: '',
         review: ''
     });
@@ -16,18 +16,35 @@ const AddReviewCard = ({ onClose, onSubmit }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const currentDate = new Date();
+        const formattedDate = currentDate.toLocaleDateString('en-GB'); // Format: DD-MM-YYYY
+        const formattedTime = currentDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+
         const newReview = {
-            id: reviewsData.length + 1,
             companyId: 1, // Assuming companyId 1 for now
-            name: formData.fullName,
-            date: new Date().toLocaleDateString(),
-            time: new Date().toLocaleTimeString(),
+            name: formData.name,
+            subject: formData.subject,
             review: formData.review,
             rating,
-            avatar: formData.fullName.charAt(0).toUpperCase(),
+            date: formattedDate,
+            time: formattedTime,
         };
-        reviewsData.push(newReview);
-        onSubmit();
+
+        // Get existing reviews from local storage
+        const existingReviews = JSON.parse(localStorage.getItem('reviews')) || [];
+        
+        // Add the new review
+        existingReviews.push(newReview);
+        
+        // Save updated reviews to local storage
+        localStorage.setItem('reviews', JSON.stringify(existingReviews));
+
+        // Reset form data
+        setFormData({ name: '', subject: '', review: '' });
+        setRating(0);
+
+        // Call onSubmit to update parent component
+        onSubmit(newReview);
     };
 
     return (
@@ -43,13 +60,13 @@ const AddReviewCard = ({ onClose, onSubmit }) => {
                 <h2 className="text-2xl font-bold mb-6 text-center">Add Review</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="fullName">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
                             Full Name
                         </label>
                         <input
                             type="text"
-                            id="fullName"
-                            value={formData.fullName}
+                            id="name"
+                            value={formData.name}
                             onChange={handleInputChange}
                             placeholder="Enter..."
                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
