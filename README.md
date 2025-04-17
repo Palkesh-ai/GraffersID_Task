@@ -1,4 +1,3 @@
-Sure! Here's a clean and presentable `README.md` file for your project, assuming it's a typical JavaScript/Node/React/Vite app based on the commands:
 
 ---
 
@@ -50,11 +49,9 @@ GraffersID_Task/
 - React
 - Vite
 - JavaScript (ES6+)
-- [Add any other libraries or tools you’ve used here]
 
 ## 🛠️ Features
 
-- [List any notable features or functionalities here]
 - Clean and modular component structure
 - Fast development experience with Vite
 
@@ -62,9 +59,7 @@ GraffersID_Task/
 
 For any queries or suggestions, feel free to reach out:
 
-- **Email:** your.email@example.com  
-- **LinkedIn:** [Your LinkedIn](https://linkedin.com/in/your-profile)
+- **Email:** palkeshsharma456@gmail.com  
+- **LinkedIn:** (https://linkedin.com/in/palkesh-ai)
 
 ---
-
-Let me know if you'd like it tailored with project-specific features or stack details!
