@@ -1,7 +1,10 @@
 import React from 'react';
-import { reviewsData } from '../../public/demoData';
+// import { reviewsData } from '../../public/demoData';
+import { useParams } from 'react-router-dom';
 
 const AddReviewCard = ({ onClose, onSubmit }) => {
+
+    const { companyId } = useParams();
     const [rating, setRating] = React.useState(0);
     const [formData, setFormData] = React.useState({
         name: '',
@@ -21,7 +24,9 @@ const AddReviewCard = ({ onClose, onSubmit }) => {
         const formattedTime = currentDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 
         const newReview = {
-            companyId: 1, // Assuming companyId 1 for now
+            // setting companyId to total length of existing reviews for simplicity +1
+
+            companyId: existingReviews.length +1, // Assuming companyId 1 for now
             name: formData.name,
             subject: formData.subject,
             review: formData.review,

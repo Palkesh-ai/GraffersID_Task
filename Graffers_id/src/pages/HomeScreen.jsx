@@ -1,11 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AddCompanyCard from '../components/AddCompanyCard';
-import { companies } from '../../public/demoData';
+import { companies as defaultCompanies } from '../../public/demoData';
 import { useNavigate } from 'react-router-dom';
 
 const CompanyList = () => {
   const [addCompany, setAddCompany] = useState(false);
-const navigate = useNavigate();
+  const [companies, setCompanies] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let storedCompanies = [];
+    try {
+      const storedData = localStorage.getItem('company');
+      if (storedData) {
+        storedCompanies = JSON.parse(storedData);
+      }
+    } catch (error) {
+      console.error('Error parsing companies from localStorage:', error);
+    }
+
+    if (storedCompanies.length > 0) {
+      setCompanies(storedCompanies);
+    } else {
+      setCompanies(defaultCompanies);
+    }
+  }, []);
 
 // Toggle add company modal state function 
 const handleAddCompanyToggle = () => {
@@ -14,13 +33,18 @@ const handleAddCompanyToggle = () => {
 
 const handleReviewToggle = (id) => {
   navigate(`/company/${id}`);
-  };
+};
 
-  const handleSubmit = () => {
-    // Handle submission logic here
-
-    handleAddCompanyToggle(); // Close the modal after submission
-  };
+const handleSubmit = (newCompany) => {
+  const updatedCompanies = [...companies, newCompany];
+  setCompanies(updatedCompanies);
+  try {
+    localStorage.setItem('company', JSON.stringify(updatedCompanies));
+  } catch (error) {
+    console.error('Error saving companies to localStorage:', error);
+  }
+  handleAddCompanyToggle();
+};
 
   return (
     <div className=" h-screen w-screen">
