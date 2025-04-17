@@ -1,10 +1,7 @@
 import React from 'react';
-// import { reviewsData } from '../../public/demoData';
-import { useParams } from 'react-router-dom';
 
-const AddReviewCard = ({ onClose, onSubmit }) => {
+const AddReviewCard = ({ onClose, onSubmit, companyId }) => {
 
-    const { companyId } = useParams();
     const [rating, setRating] = React.useState(0);
     const [formData, setFormData] = React.useState({
         name: '',
@@ -23,10 +20,12 @@ const AddReviewCard = ({ onClose, onSubmit }) => {
         const formattedDate = currentDate.toLocaleDateString('en-GB'); // Format: DD-MM-YYYY
         const formattedTime = currentDate.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
 
-        const newReview = {
-            // setting companyId to total length of existing reviews for simplicity +1
-
-            companyId: existingReviews.length +1, // Assuming companyId 1 for now
+        // Get existing reviews from local storage
+        const existingReviews = JSON.parse(localStorage.getItem('reviews')) || [];
+        
+            const newReview = {
+                companyId, // Add companyId to the new review
+            companyId,
             name: formData.name,
             subject: formData.subject,
             review: formData.review,
@@ -35,9 +34,6 @@ const AddReviewCard = ({ onClose, onSubmit }) => {
             time: formattedTime,
         };
 
-        // Get existing reviews from local storage
-        const existingReviews = JSON.parse(localStorage.getItem('reviews')) || [];
-        
         // Add the new review
         existingReviews.push(newReview);
         

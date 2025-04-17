@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AddCompanyCard from '../components/AddCompanyCard';
-import { companies as defaultCompanies } from '../../public/demoData';
 import { useNavigate } from 'react-router-dom';
+import { getCompanies } from '../localStorageUtils';
 
 const CompanyList = () => {
   const [addCompany, setAddCompany] = useState(false);
@@ -9,20 +9,12 @@ const CompanyList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    let storedCompanies = [];
     try {
-      const storedData = localStorage.getItem('company');
-      if (storedData) {
-        storedCompanies = JSON.parse(storedData);
-      }
-    } catch (error) {
-      console.error('Error parsing companies from localStorage:', error);
-    }
-
-    if (storedCompanies.length > 0) {
+      const storedCompanies = getCompanies();
       setCompanies(storedCompanies);
-    } else {
-      setCompanies(defaultCompanies);
+    } catch (error) {
+      console.error('Error loading companies:', error);
+      setCompanies([]);
     }
   }, []);
 
@@ -36,13 +28,7 @@ const handleReviewToggle = (id) => {
 };
 
 const handleSubmit = (newCompany) => {
-  const updatedCompanies = [...companies, newCompany];
-  setCompanies(updatedCompanies);
-  try {
-    localStorage.setItem('company', JSON.stringify(updatedCompanies));
-  } catch (error) {
-    console.error('Error saving companies to localStorage:', error);
-  }
+  setCompanies(prev => [...prev, newCompany]);
   handleAddCompanyToggle();
 };
 
