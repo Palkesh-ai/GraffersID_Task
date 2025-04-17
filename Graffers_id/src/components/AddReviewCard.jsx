@@ -87,7 +87,7 @@ const AddReviewCard = ({ onClose, onSubmit }) => {
                                 <svg
                                     key={i}
                                     onClick={() => setRating(i + 1)}
-                                    fill={i < rating ? "yellow" : "gray"}
+                                    fill={i < rating ? "#ECB800" : "gray"}
                                     height="25"
                                     viewBox="0 0 24 24"
                                     width="25"

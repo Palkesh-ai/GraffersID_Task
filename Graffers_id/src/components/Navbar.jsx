@@ -11,7 +11,7 @@ const Navbar = () => {
             </svg>
           </div>
           <h1 className="text-xl font-semibold flex">
-            Review<span className="text-purple-600 font-bold">&</span><h1 className=' font-bold'>RATE</h1>
+            Review<span className="text-purple-600 font-bold">&</span><span className=' font-bold'>RATE</span>
           </h1>
         </div>
         
